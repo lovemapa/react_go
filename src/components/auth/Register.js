@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+// import classnames from 'classnames'
 
 class Register extends Component {
 
     constructor() {
         super();
         this.state = {
-            name: '',
+            first_name: '',
+            last_name: '',
             email: '',
             password: '',
             repeatPassword: '',
@@ -23,24 +25,28 @@ class Register extends Component {
         e.preventDefault();
 
         const newUser = {
-            name: this.state.name,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
             email: this.state.email,
             password: this.state.password,
             repeatPassword: this.state.repeatPassword
 
         }
-        console.table(newUser)
-        console.log(newUser);
+
         axios.post('http://localhost:8080/api/v1/signup', newUser).then(response => {
             console.log(response);
 
         }).catch(err => {
-            console.log(err);
+
+            if (err)
+                console.log(err.response);
 
         })
 
     }
     render() {
+
+
         return (
             <div className="register">
                 <div className="container">
@@ -50,12 +56,21 @@ class Register extends Component {
                             <p className="lead text-center">Create your DevConnector account</p>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
-                                    <input type="text" className="form-control form-control-lg"
-                                        placeholder="Name"
-                                        name="name"
-                                        value={this.state.name}
+                                    <input type="text"
+                                        className="form-control form-control-lg"
+                                        placeholder="First Name"
+                                        name="first_name"
+                                        value={this.state.first_name}
                                         onChange={this.onChange}
-                                        required />
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" className="form-control form-control-lg"
+                                        placeholder="Last Name"
+                                        name="last_name"
+                                        value={this.state.last_name}
+                                        onChange={this.onChange}
+                                    />
                                 </div>
                                 <div className="form-group">
                                     <input type="email" className="form-control form-control-lg"
